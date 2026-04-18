@@ -22,7 +22,7 @@ class WeatherApp(QWidget):
         self.get_weather_button = QPushButton("Get Weather", self)
         self.Temperature_label: QLabel("Temperature ", self)
         self.emoji_label: QLabel("Emoji ", self)
-        swlf.description_label = QLabel("Description ", self)
+        self.description_label = QLabel("Description ", self)
 
 
 if __name__ == "__main__":

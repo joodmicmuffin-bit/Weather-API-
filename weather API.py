@@ -113,32 +113,32 @@ class WeatherApp(QWidget):
         except requests.exceptions.HTTPError as http_error:
             match response.status_code:
                 case 400:
-                    print("Bad request\nplease check your input")
+                    self.display_error("Bad request\nplease check your input")
                 case 401:
-                    print("Unauthorized\nInvalid API Key")
+                    self.display_error("Unauthorized\nInvalid API Key")
                 case 403:
-                    print("Forbidden\nAccess is denied")
+                    self.display_error("Forbidden\nAccess is denied")
                 case 404:
-                    print("not found\nCity not found")
+                    self.display_error("not found\nCity not found")
                 case 500:
-                    print("Internal Server Error\nPlease try again later.")
+                    self.display_error("Internal Server Error\nPlease try again later.")
                 case 502:
-                    print("Bad Gateway\nServer received an invalid response.")
+                    self.display_error("Bad Gateway\nServer received an invalid response.")
                 case 503:
-                    print("Service Unavailable\nThe server is temporarily unavailable.")
+                    self.display_error("Service Unavailable\nThe server is temporarily unavailable.")
                 case 504:
-                    print("Gateway Timeout\nThe server took too long to respond.")
+                    self.display_error("Gateway Timeout\nThe server took too long to respond.")
                 case _:
-                    print(F"Unexpected error occurred\n{http_error}.")
+                    self.display_error(F"Unexpected error occurred\n{http_error}.")
 
         except requests.exceptions.ConnectionError:
-            print("Connection Error:\nCheck your internet connection.")
+            self.display_error("Connection Error:\nCheck your internet connection.")
         except requests.exceptions.Timeout:
-            print("Timeout Error:\nThe request timed out")
+            self.display_error("Timeout Error:\nThe request timed out")
         except requests.exceptions.TooManyRedirects:
-            print("Too many redirects:\nCheck the URL")
+            self.display_error("Too many redirects:\nCheck the URL")
         except requests.exceptions.RequestException as req_error:
-            print(f"Request Error:\n{req_error}")
+            self.display_error(f"Request Error:\n{req_error}")
 
 
 

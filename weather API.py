@@ -1,6 +1,8 @@
 import sys
 import requests
 
+
+
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -45,8 +47,6 @@ class WeatherApp(QWidget):
         self.emoji_label.setAlignment(Qt.AlignCenter)
         self.description_label.setAlignment(Qt.AlignCenter)
 
-        # make emoji label taller so it doesn't get cropped
-        self.emoji_label.setMinimumHeight(120)
 
         self.city_label.setObjectName("city_label")
         self.city_input.setObjectName("city_input")
@@ -80,9 +80,9 @@ class WeatherApp(QWidget):
             }
 
             QLabel#emoji_label {
-                font-size: 60px;
+                font-size: 100px;
                 font-family: "Segoe UI Emoji";
-                padding: 10px;
+                min-height: 120px;
             }
 
             QLabel#description_label {
@@ -187,7 +187,9 @@ class WeatherApp(QWidget):
 
 
 if __name__ == "__main__":
+
     app = QApplication(sys.argv)
     weather_app = WeatherApp()
     weather_app.show()
     sys.exit(app.exec_())
+

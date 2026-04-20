@@ -94,6 +94,60 @@ class WeatherApp(QWidget):
             
             
         """)
+        self.get_weather_button.clicked.connect(self.get_weather)
+
+
+    def get_weather(self):
+        api_key = "12b8ff5bceca5500020d451d952cd62d"
+        city = self.city_input.text()
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = response.json()
+
+            if data["cod"] == 200:
+                self.display_weather(data)
+
+        except requests.exceptions.HTTPError as http_error:
+            match response.status_code:
+                case 400:
+                    print("Bad request\nplease check your input")
+                case 401:
+                    print("Unauthorized\nInvalid API Key")
+                case 403:
+                    print("Forbidden\nAccess is denied")
+                case 404:
+                    print("not found\nCity not found")
+                case 500:
+                    print("Internal Server Error\nPlease try again later.")
+                case 502:
+                    print("Bad Gateway\nServer received an invalid response.")
+                case 503:
+                    print("Service Unavailable\nThe server is temporarily unavailable.")
+                case 504:
+                    print("Gateway Timeout\nThe server took too long to respond.")
+                case _:
+                    print(F"Unexpected error occurred\n{http_error}.")
+
+        except requests.exceptions.ConnectionError:
+            print("Connection Error:\nCheck your internet connection.")
+        except requests.exceptions.Timeout:
+            print("Timeout Error:\nThe request timed out")
+        except requests.exceptions.TooManyRedirects:
+            print("Too many redirects:\nCheck the URL")
+        except requests.exceptions.RequestException as req_error:
+            print(f"Request Error:\n{req_error}")
+
+
+
+    def display_error(self, message):
+        pass
+
+
+
+
 
 
 if __name__ == "__main__":
